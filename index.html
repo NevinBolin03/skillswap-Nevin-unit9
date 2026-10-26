@@ -13,17 +13,18 @@
   <header>
     <nav class="navbar">
       <h1>Skill Swap</h1>
-
       <ul class="nav-links">
         <li><a href="#home">Home</a></li>
         <li><a href="#skills">Browse Skills</a></li>
+        <li><a href="#add-skill">Add Skill</a></li>
         <li><a href="#about">About</a></li>
       </ul>
     </nav>
   </header>
 
-  <!-- Homepage -->
   <main>
+
+    <!-- Homepage -->
     <section id="home" class="hero">
       <h2>Welcome to Skill Swap</h2>
       <p>
@@ -43,43 +44,86 @@
         <h3>Filter by Category</h3>
 
         <div class="filter-buttons">
-          <button type="button" data-category="All">All</button>
+          <button type="button" data-category="All" class="active">
+            All
+          </button>
           <button type="button" data-category="Programming">
             Programming
           </button>
-          <button type="button" data-category="Music">Music</button>
-          <button type="button" data-category="Career">Career</button>
+          <button type="button" data-category="Music">
+            Music
+          </button>
+          <button type="button" data-category="Career">
+            Career
+          </button>
+          <button type="button" data-category="Language">
+            Language
+          </button>
         </div>
       </div>
 
-      <!-- Skill Cards -->
-      <div id="skill-list" class="skill-grid">
-
-        <div class="skill-card" data-category="Programming">
-          <h3>Python Tutoring</h3>
-          <p>Category: Programming</p>
-          <p>Price: $20/hour</p>
-        </div>
-
-        <div class="skill-card" data-category="Music">
-          <h3>Guitar Lessons</h3>
-          <p>Category: Music</p>
-          <p>Price: $15/hour</p>
-        </div>
-
-        <div class="skill-card" data-category="Career">
-          <h3>Resume Review</h3>
-          <p>Category: Career</p>
-          <p>Price: Free</p>
-        </div>
-
-        <div class="skill-card" data-category="Programming">
-          <h3>Web Development</h3>
-          <p>Category: Programming</p>
-          <p>Price: $25/hour</p>
-        </div>
-
+      <!-- Skills loaded from database -->
+      <div id="skills-container" class="skill-grid">
+        <p>Loading skills...</p>
       </div>
+    </section>
+
+    <!-- Add Skill Section -->
+    <section id="add-skill" class="skills-section">
+      <h2>Add a New Skill</h2>
+      <p>Share something you can teach others!</p>
+
+      <form id="add-skill-form">
+
+        <label for="skill-title">Skill Title</label>
+        <input
+          type="text"
+          id="skill-title"
+          required
+          placeholder="Example: Java Tutoring"
+        >
+
+        <label for="skill-category">Category</label>
+        <select id="skill-category" required>
+          <option value="">Select Category</option>
+          <option value="Programming">Programming</option>
+          <option value="Music">Music</option>
+          <option value="Career">Career</option>
+          <option value="Language">Language</option>
+        </select>
+
+        <label for="skill-price">Price ($ per hour)</label>
+        <input
+          type="number"
+          id="skill-price"
+          min="0"
+          step="0.01"
+          required
+          placeholder="Example: 20"
+        >
+
+        <label for="skill-description">Description</label>
+        <textarea
+          id="skill-description"
+          required
+          placeholder="Describe your skill"
+        ></textarea>
+
+        <label for="skill-provider">Your Name</label>
+        <input
+          type="text"
+          id="skill-provider"
+          required
+          placeholder="Enter your name"
+        >
+
+        <button type="submit" class="btn">
+          Add Skill
+        </button>
+
+        <p id="form-message" role="status" aria-live="polite"></p>
+
+      </form>
     </section>
 
     <!-- About Section -->
@@ -93,6 +137,7 @@
         learning opportunity.
       </p>
     </section>
+
   </main>
 
   <!-- Footer -->
@@ -100,9 +145,9 @@
     <p>&copy; 2026 Skill Swap. All rights reserved.</p>
   </footer>
 
-  <!-- JavaScript -->
+  <script src="api-service.js"></script>
+  <script src="skillswap-function.js"></script>
   <script src="skillswap-functions.js"></script>
-  <script src="script.js"></script>
 
 </body>
 </html>

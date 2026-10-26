@@ -1,13 +1,18 @@
 
-const { filterSkillsByCategory } = require('../skillswap-functions');
+const {
+  filterSkillsByCategory,
+  calculateTotalCosts,
+  matchSkillsToUser
+} = require('../skillswap-functions');
+
+const skills = [
+  { title: 'Python Tutoring', category: 'Programming', price: 20 },
+  { title: 'Guitar Lessons', category: 'Music', price: 15 },
+  { title: 'Resume Review', category: 'Career', price: 0 },
+  { title: 'Web Development', category: 'Programming', price: 25 }
+];
 
 describe('filterSkillsByCategory', () => {
-  const skills = [
-    { title: 'Python Tutoring', category: 'Programming', price: 20 },
-    { title: 'Guitar Lessons', category: 'Music', price: 15 },
-    { title: 'Resume Review', category: 'Career', price: 0 },
-    { title: 'Web Development', category: 'Programming', price: 25 }
-  ];
 
   test('filters skills by category', () => {
     const result = filterSkillsByCategory(skills, 'Programming');
@@ -18,14 +23,52 @@ describe('filterSkillsByCategory', () => {
   });
 
   test('returns all skills when category is All', () => {
-    const result = filterSkillsByCategory(skills, 'All');
-
-    expect(result).toEqual(skills);
+    expect(filterSkillsByCategory(skills, 'All')).toEqual(skills);
   });
 
   test('returns an empty array when no skills match', () => {
-    const result = filterSkillsByCategory(skills, 'Cooking');
-
-    expect(result).toEqual([]);
+    expect(filterSkillsByCategory(skills, 'Cooking')).toEqual([]);
   });
+
+});
+
+describe('calculateTotalCosts', () => {
+
+  test('calculates the total price of skills', () => {
+    expect(calculateTotalCosts(skills)).toBe(60);
+  });
+
+  test('returns zero for an empty array', () => {
+    expect(calculateTotalCosts([])).toBe(0);
+  });
+
+  test('handles free skills', () => {
+    expect(calculateTotalCosts([
+      { title: 'Resume Review', price: 0 }
+    ])).toBe(0);
+  });
+
+});
+
+describe('matchSkillsToUser', () => {
+
+  test('matches skills based on user interests', () => {
+    const result = matchSkillsToUser(skills, ['Programming']);
+
+    expect(result).toHaveLength(2);
+  });
+
+  test('matches multiple interests', () => {
+    const result = matchSkillsToUser(
+      skills,
+      ['Programming', 'Music']
+    );
+
+    expect(result).toHaveLength(3);
+  });
+
+  test('returns empty array when no interests match', () => {
+    expect(matchSkillsToUser(skills, ['Cooking'])).toEqual([]);
+  });
+
 });
